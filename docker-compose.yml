@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  family:
+    build:
+      context: .
+    container_name: family
+    ports:
+    - 80:80
+    tty: true
+    stdin_open: true
+    volumes:
+    - tnghtml:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+    - MYSQL_DATABASE=tngdb
+    # So you don't have to use root, but you can if you like
+    - MYSQL_USER=user
+    # You can use whatever password you like
+    - MYSQL_PASSWORD=password
+    # Password for root access
+    - MYSQL_ROOT_PASSWORD=admin
+    ports:
+    # <Port exposed> : < MySQL Port running inside container>
+    - '3306:3306'
+    volumes:
+    - my-db:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: 'png-phpmyadmin'
+    environment:
+    - PMA_HOST=db
+    - PMA_PORT=3306
+    - PMA_USER=user
+    - PMA_PASSWORD=password
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+
+volumes:
+  my-db:
+  tnghtml:
