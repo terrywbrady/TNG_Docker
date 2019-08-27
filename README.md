@@ -3,6 +3,9 @@
 [The Next Generation of Genealogy Sitebuilding ("TNG")](https://www.tngsitebuilding.com/)
 
 Building the Docker Image Locally
+
+Copy your licensed TNG installation to tng12.1 in this folder.
+
 ```
 docker-compose -p tng build
 ```
@@ -24,7 +27,7 @@ Complete the setup at
 
 Stop TNG
 ```
-docker-compose -p tng up -d
+docker-compose -p tng down
 ```
 
 Your content will be persisted in the docker volume __tng_my-db__.
